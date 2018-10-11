@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="/"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>链库管理系统</title>
+    <script type="text/javascript" src="admin/comm/jquery/jquery.min.js"></script>
+</head>
+<body class="indexBody">
+
+
+</body>
+<script>
+    function login() {
+        $.ajax({
+            url: '/i/user/userLogin',
+            type: 'POST',
+            data: {"username": "user", "password": "asf", "sik": "7"},
+            success: function (data) {
+                if (data.success) {
+                    console.log(data.entity)
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+
+
+    function getOrderInfo() {
+        $.ajax({
+            url: '/i/order/getOrderInfo',
+            type: 'POST',
+            data: {"orderid": "2018090521021"},
+            success: function (data) {
+                if (data.success) {
+                    console.log(data.entity)
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+
+
+    function bindingTary() {// 绑定托盘
+        var data = {
+            "orderid": "1001",
+            "trayno":"A001",
+            "goodList":  JSON.stringify([{"id":0,"orderid":"1001","trayno":"A001","goodid":1,"number":1}])
+         };
+        $.ajax({
+            url: '/i/order/bindingTary',
+            type: 'POST',
+            data: data,
+            traditional:true,
+            success: function (data) {
+                if (data.success) {
+                    console.log(data.entity)
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+    function unitTary() {// 解绑托盘 （）
+        var data = {
+            "orderid": "1001",
+            "trayno":"A001",
+            "goodList":  JSON.stringify([{"id":0,"orderid":"1001","trayno":"A001","goodid":1,"number":4},{"id":0,"orderid":"1001","trayno":"A001","goodid":2,"number":4}])
+        };
+        $.ajax({
+            url: '/i/order/untieTary',
+            type: 'POST',
+            data: data,
+            traditional:true,
+            success: function (data) {
+                if (data.success) {
+                    console.log(data.entity)
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+   var hash= window.location.hash;
+    switch (hash){
+        case "#/1":
+            getOrderInfo();
+            break;
+        case "#/2":
+            bindingTary();
+            break;
+        case "#/3":
+            unitTary();
+            break;
+
+    }
+    // getOrderInfo();
+
+</script>
+</html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smartcold.tray.mapper.OrderMapper">
+    <insert id="addTaryGoodInfo">
+        INSERT INTO `tray_good`(`orderid`,`trayno`,`goodid`,`number`)VALUES
+        <foreach collection="list" item="model" separator=",">
+            (
+            #{model.orderid},
+            #{model.trayno},
+            #{model.goodid},
+            #{model.number}
+            )
+        </foreach>
+
+	</insert>
+
+    <update id="upateOrderSatus">
+		update `user_order` set `status`=#{status} where `orderid`=#{orderid};
+	</update>
+	<update id="updateOrderStock" parameterType="java.util.Map">
+		<foreach collection="list" separator=";" item="model">
+	      	update `order_detail` set  `hnumber`=(`hnumber`+#{model.number}) where `orderid`=#{model.orderid} and `goodid` = #{model.goodid}
+		</foreach>
+	</update>
+	<update id="rebackOrderStock" parameterType="java.util.Map">
+		<foreach collection="list" separator=";" item="model">
+            update `order_detail` set  `hnumber`=(`hnumber`-#{model.number}) where `orderid`=#{model.orderid} and `goodid` = #{model.goodid}
+		</foreach>
+	</update>
+	<delete id="delTaryGoodByFilte" >
+		DELETE from tray_good where orderid=#{orderid} and trayno =#{trayno};
+	</delete>
+
+	<select id="getOderListByUid" resultType="com.smartcold.tray.entity.tray.User_Order">
+		SELECT * from user_order where uid=#{uid};
+	</select>
+
+    <select id="getOrderDetailByrderid" resultType="Map" parameterType="map">
+		   SELECT
+				o.`orderid`,
+				o.`goodid`,
+			    g.`name` as `goodname`,
+			    gt.`name` as `goodtype` ,
+				o.`onumber`,
+				 (o.`onumber`-o.`hnumber`) `bnumber`,
+				o.`addtime`
+			FROM
+				`order_detail` o
+			LEFT JOIN good_info g ON o.goodid = g.id
+			LEFT JOIN good_type gt ON g.type = gt.id
+			WHERE
+				o.`orderid` = #{orderid};
+	</select>
+
+
+
+    <select id="verifData" resultType="java.lang.Integer">
+       SELECT COUNT(*) from (SELECT o.orderid,o.goodid,o.onumber,o.hnumber,  SUM(t.number) lnumber  from order_detail o LEFT JOIN tray_good t on o.goodid=t.goodid where o.orderid=#{orderid} GROUP BY o.goodid ) as t where t.hnumber!=lnumber;
+    </select>
+    <!-- 根据商品id 查询订单商品数量 -->
+	<select id="getOrderDetailByGoodid" resultType="com.smartcold.tray.entity.tray.Order_Detail">
+		SELECT `goodid`,`onumber`,`hnumber` from `order_detail` where `orderid`=#{orderid} and `goodid` in(${goodids});
+	</select>
+	<!-- 根据根据托盘查询已经装载的商品数量 -->
+	<select id="getBalanceNumbebyTrays" parameterType="map" resultType="com.smartcold.tray.entity.tray.Tray_Good_Info">
+		  SELECT `goodid`,SUM(`number`) `number` from `tray_good`  where `orderid`=#{orderid}  and  `trayno` =#{trayno} GROUP BY `goodid`;
+	</select>
+
+    <select id="getBalanceNumbebyGoogid" resultType="com.smartcold.tray.entity.tray.Order_Detail">
+            SELECT  o.goodid, (o.onumber-IFNULL(SUM(t.number),0) ) bnumber   from order_detail o LEFT JOIN tray_good t on o.goodid=t.goodid where o.orderid=#{orderid} and o.goodid in(${goodids}) GROUP BY o.goodid ;
+    </select>
+
+
+
+</mapper>

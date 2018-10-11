@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>冷库管理</title>
+    <base href="/" >
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="admin/comm/jquery/themes/default/easyui.css"/>
+    <script type="text/javascript" src="admin/comm/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="admin/comm/jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=PljdkOFpwmjpU00lFQhakTbjilGaH0or"></script>
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+        }
+        .info-box{
+            float: left;
+            z-index: 1;
+            position: relative;
+            text-align: center;
+
+        }
+        .info-box-content{
+            margin: 10px 0px 5px 0px;
+            border: 1px solid #ccc;
+            background: rgb(255,255,255,0.5);
+            box-shadow: 5px 5px 2.5px #CDC9C9;
+            border-radius: 0px 25px 25px 1px;
+        }
+        .info-box-text{
+            color: #4F4F4F;
+            font: bold 20px Helvetica, Arial, sans-serif;
+            letter-spacing: -0.05em;
+            line-height: 20px;
+            margin: 10px 0 30px;
+        }
+        .info-box-number{
+            font: bold 35px Helvetica, Arial, sans-serif;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="info-box">
+    <div class="info-box-content">
+        <span class="info-box-text">托盘总量</span>
+        <span class="info-box-number" id="allPallet"><small>个</small></span>
+    </div>
+    <div class="info-box-content">
+        <span class="info-box-text">托盘使用量</span>
+        <span class="info-box-number"id="usePallet"><small>个</small></span>
+    </div>
+    <div class="info-box-content">
+        <span class="info-box-text">保温箱总量</span>
+        <span class="info-box-number"id="allCover"><small>个</small></span>
+    </div>
+    <div class="info-box-content">
+        <span class="info-box-text">保温箱使用量</span>
+        <span class="info-box-number"id="useCover"><small>个</small></span>
+    </div>
+</div>
+<div id="allmap" style="width: 100%;height: 100%;position: absolute;"></div>
+<div id="pallet_manage" class="easyui-dialog" title="载具数据展示" style="width:50%;min-height:500px;height:500%;"
+     data-options="iconCls:'icon-save',modal:true,closed:true">
+    <table id="showGood" class="easyui-datagrid" style="width:100%;height:100%;"></table>
+</div>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+<!--<script type="text/javascript" src="app/pallet_map.js"></script>-->
+<!--<script type="text/javascript" src="app/comm.js"></script>-->
+</body>
+</html>

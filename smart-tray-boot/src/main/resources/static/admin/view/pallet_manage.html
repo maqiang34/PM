@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>冷库管理</title>
+    <base href="/" >
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="admin/comm/jquery/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="admin/style/icon.css"/>
+    <link rel="stylesheet" type="text/css" href="admin/style/comm.css"/>
+    <link rel="stylesheet" type="text/css" href="admin/style/main/addRdc.css"/>
+    <link rel="stylesheet" href="admin/comm/imgview/viewer.min.css">
+    <script type="text/javascript" src="admin/comm/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="admin/comm/jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript"  src="admin/comm/imgview/viewer.min.js"></script>
+    <script type="text/javascript" src="admin/app/comm.js"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=PljdkOFpwmjpU00lFQhakTbjilGaH0or"></script>
+    <script type="text/javascript" src="admin/app/pallet_manage.js"></script>
+    <style>
+        #capacityunit+span{
+            width: 30%!important;
+        }
+        #rentcapacityunit+span{
+             width: 30%!important;
+         }
+        #buildtype+span{
+            width: 40%!important;
+        }
+		.btns{
+			background: #00a7d0;
+    		border-color: #0290b9;
+            color: #ffffff;
+    		-webkit-appearance: none;
+    		appearance: none;
+		}
+        .fill {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'center'">
+    <table id="objTable" class="fill" data-options="onClickRow:onClickRow"></table>
+</div>
+<div id="div_filter" style="display: none;">
+    <div id="div_filteri" style="padding:2px 5px;">
+    </div>
+</div>
+<div id="goodManage" class="easyui-dialog" title="载具货物列表" style="width:50%;height:500px"
+     data-options="iconCls:'icon-save',modal:true,closed:true">
+    <table id="showGood" class="easyui-datagrid" style="width:100%;height:100%;"></table>
+</div>
+</body>
+</html>
